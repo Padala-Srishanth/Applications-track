@@ -69,9 +69,15 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [applications, setApplications] = useState<Application[]>([]);
+  const [userName, setUserName] = useState<string>("User");
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user.name) {
+      setUserName(user.name);
+    }
+
     const fetchApps = async () => {
       try {
         const data = await getApplications();
@@ -179,7 +185,7 @@ const Dashboard = () => {
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground">Applications</h1>
+              <h1 className="text-2xl md:text-3xl font-bold text-foreground">Welcome, {userName}</h1>
               <p className="text-muted-foreground mt-1">Track and manage your job applications</p>
             </div>
             <Button variant="hero" asChild>

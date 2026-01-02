@@ -13,6 +13,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Request logger for debugging
+app.use((req, res, next) => {
+    console.log(`Received ${req.method} request to ${req.url}`);
+    next();
+});
+
+// Root route to check server status
+app.get('/', (req, res) => {
+    res.send('Server is running. API is at /api');
+});
+
 const PORT = process.env.PORT || 5003;
 const SECRET_KEY = process.env.SECRET_KEY || "your_super_secret_jwt_key_here_change_in_prod";
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || "your_encryption_secret_key_here";
